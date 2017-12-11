@@ -1,6 +1,6 @@
 <?php
 
-namespace Magein\renderDataZsdx\library\render;
+namespace Magein\renderDataExt\library\render;
 
 use Magein\renderData\library\constant\FormFieldConstant;
 

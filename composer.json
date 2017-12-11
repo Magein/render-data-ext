@@ -1,8 +1,8 @@
 {
-  "name": "magein/render-data-zsdx",
+  "name": "magein/render-data-ext",
   "description": "php渲染表格和表单工具",
   "type": "library",
-  "homepage": "https://github.com/magein/renderdata",
+  "homepage": "https://github.com/magein/render-data-ext",
   "license": "Apache-2.0",
   "authors": [
     {

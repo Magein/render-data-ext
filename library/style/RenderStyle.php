@@ -1,9 +1,9 @@
 <?php
 
-namespace Magein\renderDataZsdx\library\style;
+namespace Magein\renderDataExt\library\style;
 
 use Magein\renderData\library\FieldRenderAbstract;
-use Magein\renderDataZsdx\library\RenderFactory;
+use Magein\renderDataExt\library\RenderFactory;
 
 class RenderStyle extends \Magein\renderData\library\style\RenderStyle
 {

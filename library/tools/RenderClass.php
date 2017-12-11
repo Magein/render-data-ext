@@ -1,16 +1,16 @@
 <?php
 
-namespace Magein\renderDataZsdx\library\tools;
+namespace Magein\renderDataExt\library\tools;
 
-use Magein\renderDataZsdx\library\render\DateRender;
-use Magein\renderDataZsdx\library\render\EditRender;
-use Magein\renderDataZsdx\library\render\OperateRender;
-use Magein\renderDataZsdx\library\render\SelectRender;
-use Magein\renderDataZsdx\library\RenderFactory;
+use Magein\renderDataExt\library\render\DateRender;
+use Magein\renderDataExt\library\render\EditRender;
+use Magein\renderDataExt\library\render\OperateRender;
+use Magein\renderDataExt\library\render\SelectRender;
+use Magein\renderDataExt\library\RenderFactory;
 
 /**
  * Trait Tips
- * @package Magein\renderDataZsdx\library\traits
+ * @package Magein\renderDataExt\library\traits
  */
 class RenderClass extends \Magein\renderData\library\tools\RenderClass
 {

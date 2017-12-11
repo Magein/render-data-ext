@@ -1,9 +1,9 @@
 <?php
 
-namespace Magein\renderDataZsdx\library;
+namespace Magein\renderDataExt\library;
 
-use Magein\renderDataZsdx\library\style\RenderStyle;
-use Magein\renderDataZsdx\library\tools\RenderClass;
+use Magein\renderDataExt\library\style\RenderStyle;
+use Magein\renderDataExt\library\tools\RenderClass;
 
 class RenderFactory extends \Magein\renderData\library\RenderFactory
 {

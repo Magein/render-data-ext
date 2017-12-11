@@ -1,6 +1,6 @@
 <?php
 
-namespace Magein\renderDataZsdx\library\tools;
+namespace Magein\renderDataExt\library\tools;
 
 class Tools
 {
