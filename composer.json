@@ -1,0 +1,28 @@
+{
+  "name": "magein/render-data-zsdx",
+  "description": "php渲染表格和表单工具",
+  "type": "library",
+  "homepage": "https://github.com/magein/renderdata",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "xiaomage",
+      "email": "1154699897@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "magein/render-data": "*@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Magein\\renderDataZsdx\\library\\": "library/"
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  }
+}
