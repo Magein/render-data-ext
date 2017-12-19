@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Magein\\renderDataZsdx\\library\\": "library/"
+      "Magein\\renderDataExt\\library\\": "library/"
     }
   },
   "repositories": {
