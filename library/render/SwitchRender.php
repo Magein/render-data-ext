@@ -5,6 +5,11 @@ namespace Magein\renderDataExt\library\render;
 use Magein\renderData\library\constant\FormFieldConstant;
 use Magein\renderData\library\FieldRenderAbstract;
 
+/**
+ * 开关类
+ * Class SwitchRender
+ * @package Magein\renderDataExt\library\render
+ */
 class SwitchRender extends FieldRenderAbstract
 {
     protected $type = FormFieldConstant::TYPE_CHECKBOX;
@@ -23,6 +28,7 @@ class SwitchRender extends FieldRenderAbstract
     }
 
     /**
+     * 使用ace框架
      * @return string
      */
     protected function render()
@@ -43,11 +49,10 @@ class SwitchRender extends FieldRenderAbstract
             $jsonData = json_encode($jsonData, JSON_UNESCAPED_UNICODE);
         }
 
-
-        $input = '<label>
-<input name="' . $this->name . '[]" class="ace ace-switch ace-switch-4" type="checkbox" ' . ($checked ? ' checked' : '') . ($jsonData ? ' data-json=' . $jsonData . '' : '') . '>
-<span class="lbl switch-button"></span>
-</label>';
+        $input = '<label>'
+            . '<input name="' . $this->name . '[]" class="ace ace-switch ace-switch-4" type="checkbox" ' . ($checked ? ' checked' : '') . ($jsonData ? ' data-json=' . $jsonData . '' : '') . '>'
+            . '<span class="lbl switch-button"></span>'
+            . '</label>';
 
         return $input;
     }
