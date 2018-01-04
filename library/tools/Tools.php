@@ -71,7 +71,7 @@ class Tools
      */
     public static function operate($operate, $url = '', $data = [], $other = [])
     {
-        if (preg_match('/Action/', $url)) {
+        if (preg_match('/Action$/', $url)) {
             $url = self::redirect($url, $data);
             $data = [];
         }
@@ -98,6 +98,10 @@ class Tools
      */
     public static function ajax($url, $data, $redirect = '')
     {
+        if (preg_match('/Action$/', $url)) {
+            $url = self::redirect($url);
+        }
+
         $param['url'] = $url;
 
         if ($data) {
