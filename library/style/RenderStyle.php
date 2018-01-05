@@ -18,9 +18,12 @@ class RenderStyle extends \Magein\renderData\library\style\RenderStyle
 
         foreach ($result as $name => $item) {
 
-            $title = isset($this->fieldTitle[$name]) ? $this->fieldTitle[$name] : '';
+            // 隐藏域隐藏不显示标题
+            if (preg_match('/type="hidden"/', $item)) {
+                $form .= $item;
+            } else {
 
-            if ($title) {
+                $title = isset($this->fieldTitle[$name]) ? $this->fieldTitle[$name] : '';
 
                 $desc = '<label class="col-sm-3 control-label no-padding-right">' . $title . '</label>';
 
@@ -37,9 +40,6 @@ class RenderStyle extends \Magein\renderData\library\style\RenderStyle
                 $item = '<div class="col-sm-9">' . $item . '</div>';
 
                 $form .= '<div class="form-group">' . $desc . $item . '</div>';
-
-            } else {
-                $form .= $item;
             }
         }
 
