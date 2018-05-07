@@ -34,7 +34,7 @@ class SelectRender extends \Magein\renderData\library\render\form\SelectRender
      * ]
      * @return $this
      */
-    public function setChange(string $childName, array $childList)
+    public function setChange($childName, array $childList)
     {
         $this->change['child_name'] = $childName;
         $this->change['child_list'] = $childList;

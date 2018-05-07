@@ -31,7 +31,7 @@ class Tools
      * @param array|bool $script 绑定脚本  true表示需要弹出一个确认框， 数组表示弹出对话框，数组形式为['reason'=>'理由|请输入理由|没有理由']表示 对话框中的输入框name值为reason，描述为理由
      * @return array
      */
-    public static function fastOperate(string $operate = '', string $url = '', array $data = [], $script = true)
+    public static function fastOperate($operate = '', $url = '', array $data = [], $script = true)
     {
         $url = '?action_name=' . $url;
 
