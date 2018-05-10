@@ -57,9 +57,10 @@ class RenderClass extends \Magein\renderData\library\tools\RenderClass
     }
 
     /**
+     * 兼容php5.6
      * @return SwitchRender
      */
-    public function switch()
+    public function switches()
     {
         $renderClass = new SwitchRender();
         RenderFactory::setFieldRenderClass($renderClass);
