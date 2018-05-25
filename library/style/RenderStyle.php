@@ -3,6 +3,7 @@
 namespace Magein\renderDataExt\library\style;
 
 use Magein\renderData\library\FieldRenderAbstract;
+use Magein\renderData\library\render\FormRender;
 use Magein\renderDataExt\library\RenderFactory;
 
 class RenderStyle extends \Magein\renderData\library\style\RenderStyle
@@ -35,6 +36,19 @@ class RenderStyle extends \Magein\renderData\library\style\RenderStyle
                     $class = isset($matches[1]) ? $matches[1] : '';
 
                     $item = preg_replace('/(<input)/', '$1 class="col-xs-10 col-sm-5 ' . $class . '"', $item);
+                }
+
+                if (isset($this->field[$name]['class'])) {
+                    /**
+                     * @var $class FormRender
+                     */
+                    $class = $this->field[$name]['class'];
+
+                    $description = $class->__get('description');
+
+                    if ($description) {
+                        $item = $item . '<span class="help-inline col-xs-12 col-sm-7"><span class="middle">' . $description . '</span></span>';
+                    }
                 }
 
                 $item = '<div class="col-sm-9">' . $item . '</div>';
