@@ -7,6 +7,7 @@ use Magein\renderDataExt\library\render\EditRender;
 use Magein\renderDataExt\library\render\OperateRender;
 use Magein\renderDataExt\library\render\SelectRender;
 use Magein\renderDataExt\library\render\SwitchRender;
+use Magein\renderDataExt\library\render\UploadRender;
 use Magein\renderDataExt\library\RenderFactory;
 
 /**
@@ -15,6 +16,14 @@ use Magein\renderDataExt\library\RenderFactory;
  */
 class RenderClass extends \Magein\renderData\library\tools\RenderClass
 {
+    public function upload()
+    {
+        $renderClass = new UploadRender();
+        RenderFactory::setFieldRenderClass($renderClass);
+
+        return $renderClass;
+    }
+
     public function select()
     {
         $renderClass = new SelectRender();
