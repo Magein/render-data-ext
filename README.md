@@ -1,10 +1,11 @@
 ### render-data-ext
-    基于render-data渲染数据的扩展版本，仅限于ace-admin使用。
+    
+    基于 render-data 渲染数据的扩展版本，适用于 ace-admin 框架使用。
 
 ### 交互文件
 
     基于render-data-static/public/js/admin-common.js
-    
+     
     cdn cdn.wxhand.com/ace-admin/common/admin-common.js
 
 ### 更新日志
