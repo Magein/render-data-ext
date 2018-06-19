@@ -8,21 +8,52 @@ class SelectRender extends \Magein\renderData\library\render\form\SelectRender
 {
     protected $type = FormFieldConstant::TYPE_SELECT;
 
+    /**
+     * 交互事件
+     * @var array
+     */
     private $change = [];
 
     /**
-     * @param $options
+     *
+     * @param array $options 下拉选项
+     * @param bool $condition 是否作为筛选使用，true 则追加一个 不限的 option，如果使用自定义文案，需使用 setCondition
      * @return $this
      */
-    public function setOptions($options)
+    public function setOptions($options, $condition = false)
     {
         $this->options = $options;
+
+        if ($condition) {
+            $this->setCondition();
+        }
 
         return $this;
     }
 
     /**
-     * @param string $childName 子级的名称
+     * @param array $condition
+     * @return array
+     */
+    public function setCondition($condition = [])
+    {
+        if (empty($this->options)) {
+            return $this->options;
+        }
+
+        $condition = $condition ?: ['' => '不限'];
+
+        foreach ($this->options as $key => $item) {
+            $condition[$key] = $item;
+        }
+
+        $this->options = $condition;
+
+        return $this->options;
+    }
+
+    /**
+     * @param string $childName 子级的名称 这里的名称是<select name=''>中 name 的属性值
      * @param array $childList 数据 格式为
      * [
      *      '父级的option的value值'=>[
@@ -32,6 +63,47 @@ class SelectRender extends \Magein\renderData\library\render\form\SelectRender
      *              ]
      *       ]
      * ]
+     *
+     *
+     * example:
+     *
+     *  父类option:
+     *      [
+     *          "fashion"=>"时装",
+     *          "food"=>"食品"
+     *      ]
+     *
+     * 则$childList参数为:
+     *      [
+     *          "fashion"=>[
+     *              [
+     *                  "value"=>"man",
+     *                  "title"=>"男装"
+     *              ],
+     *              [
+     *                  "value"=>"woman",
+     *                  "title"=>"女装"
+     *              ],
+     *              [
+     *                  "value"=>"child",
+     *                  "title"=>"童装"
+     *              ]
+     *          ],
+     *          "food"=>[
+     *              [
+     *                  "value"=>"fruits",
+     *                  "title"=>"水果"
+     *              ],
+     *              [
+     *                  "value"=>"vegetables",
+     *                  "title"=>"蔬菜"
+     *              ]
+     *          ]
+     *
+     *      ]
+     *
+     *
+     *
      * @return $this
      */
     public function setChange($childName, array $childList)
