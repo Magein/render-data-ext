@@ -27,3 +27,7 @@
         2. SelectRender类增加setCondition方法，该方法同上用处一样，只是可以自定义文案，或者追加多个选项
          
         3. UploadRender增加setContainer方法，用于设置承载上传类的容器，最后渲染的时候会直接渲染传递的容器，这样使得上传类更灵活
+        
+    18.7.5
+    
+        1. RenderStyle类的export() 方法，如果值是一个数组，则默认使用逗号分隔，暂时不考虑多维数组的情况
