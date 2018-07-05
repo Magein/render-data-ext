@@ -17,6 +17,26 @@ class SwitchRender extends FieldRenderAbstract
     private $clickEvent = null;
 
     /**
+     * 这是开关的事件，这里固定成一个ajax请求，需要搭配
+     * http://cdn.wxhand.com/ace-admin/common/admin-common.js
+     *
+     * 最总将参数已字符串的形式渲染到html标签的data-json属性中
+     *
+     * format:
+     * $callback=function($param){
+     *
+     *      $data=[
+     *          'id'=>$param['id']
+     *          'status'=>1
+     *      ];
+     *
+     *      // 可以使用 Tools工具 构建任意的交互时间
+     *
+     *      // return Tools::ajax($data);
+     *
+     *      // return Tools::operate();
+     * }
+     *
      * @param callable $callback
      * @return $this
      */
