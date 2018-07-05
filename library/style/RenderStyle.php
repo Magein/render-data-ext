@@ -125,13 +125,21 @@ class RenderStyle extends \Magein\renderData\library\style\RenderStyle
         $content = '';
 
         if ($result) {
-            foreach ($result as $item) {
-                $value = [];
-                foreach ($item as $key => $val) {
-                    $value[] = '"' . preg_replace('/(["])/', '"$1', $val) . '"';
-                }
-                $content .= implode(',', $value) . "\n";
-            }
+            $content = array_reduce($result, function ($content, $item) {
+
+                $value = array_reduce($item, function ($result, $item) {
+
+                    if (is_array($item)) {
+                        $item = implode(',', $item);
+                    }
+
+                    $result[] = '"' . preg_replace('/(["])/', '"$1', $item) . '"';
+
+                    return $result;
+                });
+
+                return $content . implode(',', $value) . "\n";
+            });
         }
 
         // 存在编码问题请在下载输出前根据生产环境转化，不要在这里直接转化
