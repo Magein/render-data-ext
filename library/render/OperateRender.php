@@ -95,7 +95,12 @@ class OperateRender extends FieldRenderAbstract
                     }
                 }
 
-                $render .= '<a href="' . $url . '" ' . ($attr ? $attr : '') . ' name="operate" target="_blank" ' . ($jsonData ? ' data-json=' . $jsonData . '' : '') . '>' . $operate . '</a>';
+                /**
+                 * 解决360浏览器交互事件的时候，使用_blank会打开新的标签页的问题
+                 */
+                $target = $jsonData ? '_self' : '_blank';
+
+                $render .= '<a href="' . $url . '" ' . ($attr ? $attr : '') . ' name="operate" target="' . $target . '" ' . ($jsonData ? ' data-json=' . $jsonData . '' : '') . '>' . $operate . '</a>';
             }
         }
 

@@ -29,5 +29,9 @@
         3. UploadRender增加setContainer方法，用于设置承载上传类的容器，最后渲染的时候会直接渲染传递的容器，这样使得上传类更灵活
         
     18.7.5
-    
+     
         1. RenderStyle类的export() 方法，如果值是一个数组，则默认使用逗号分隔，暂时不考虑多维数组的情况
+        
+    18.7.6  
+     
+        1. 修复OperateRender类渲染的a标签 target 属性的值默认使用 _blank 修改为 _self ,使用 _blank 在360浏览器中会打开新的标签  
