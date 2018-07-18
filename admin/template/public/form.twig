@@ -1,0 +1,44 @@
+{% extends '@__base__/base.twig' %}
+
+{% block script %}
+
+    <!--引入公共脚本文件-->
+    {% include 'public/script.twig' %}
+
+{% endblock %}
+
+{% block body %}
+
+    <style>
+        textarea, .w520 {
+            margin: 0px;
+            height: 235px;
+            width: 520px;
+        }
+    </style>
+
+    <div class="page-header">
+        <h1>{{ public_title }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" action="{{ request_url(null, save_data_action_name) }}" method="post">
+
+                {% autoescape false %}
+                    {{ view.view }}
+                {% endautoescape %}
+
+                <div class="space-4"></div>
+
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info ajax-post" type="submit" target-form="form-horizontal"><i
+                                    class="icon-ok bigger-110"></i>提交
+                        </button>&nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset"><i class="icon-undo bigger-110"></i>重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

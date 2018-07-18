@@ -1,0 +1,82 @@
+<!--弹出框插件-->
+<script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/layer/layer/layer.js"></script>
+<!--时间插件-->
+<script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/my97date/WdatePicker.js"></script>
+<!--地区静态资源文件-->
+<script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/common/region.js?v={{ js_version }}"></script>
+<!--运营后台脚本文件  这个文件很重要，页面交互的脚本全在这里面-->
+<script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/common/admin-common.js?v={{ js_version }}"></script>
+
+<!--富文本编辑器开始-->
+{% if ueditor_server_action %}
+    <script type="text/javascript">
+        window.UEDITOR_HOME_URL = 'http://cdn.wxhand.com/wei/ueditor/';
+        window.UEDITOR_SERVER_URL = "{{ request_url(null, ueditor_server_action)|raw }}";
+    </script>
+    <script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/ueditor/ueditor.all.min.js"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" src="http://cdn.wxhand.com/ace-admin/ueditor/lang/zh-cn/zh-cn.js"></script>
+{% endif %}
+<!--富文本编辑器结束-->
+
+<!--上传图片插件开始-->
+{% if web_uploader_server_action %}
+    <script type="text/javascript">
+        WEB_UPLOADER_SERVER_ACTION = "{{ request_url(null, web_uploader_server_action)|raw }}";
+        ACCEPT_IMAGES_NAME = "{{ web_uploader_accept_name }}";
+    </script>
+    <link rel="stylesheet" href="http://cdn.wxhand.com/ace-admin/webuploader/css/style.css?v={{ css_version }}">
+    <link rel="stylesheet" href="http://cdn.wxhand.com/ace-admin/webuploader/css/webuploader.css?v={{ css_version }}">
+    <script src="http://cdn.wxhand.com/ace-admin/webuploader/js/webuploader.js?v={{ js_version }}"></script>
+    <script src="http://cdn.wxhand.com/ace-admin/webuploader/js/upload.js?v={{ js_version }}"></script>
+{% endif %}
+<!--上传图片插件结束-->
+
+<!--公共脚本-->
+<script type="text/javascript">
+    $(function () {
+        $('a[href]').each(function () {
+            $(this).attr('href', transUrl($(this).attr('href')));
+        });
+    });
+
+    /**
+     * 转化链接
+     * @param href
+     */
+    function transUrl(href) {
+
+        if (!href.match(/\?action_name=/)) {
+            return href;
+        }
+
+        var url = '{{ request_url(null,"xxxx",{param:"xxxx"})|raw }}';
+
+        var param = href.match(/([\w]+=[\w\\\\]+)/g);
+
+        if (param) {
+
+            var str = '';
+
+            for (var i in param) {
+                if (i > 0) {
+                    str += param[i] + '&';
+                }
+            }
+            str = str.substr(0, str.length - 1);
+
+            url = url.replace('param=xxxx', str);
+
+            var action_name = param[0].match(/=([\w\\\\]+)/);
+
+            if (action_name[1]) {
+                url = url.replace('__aadmin_action_name=xxxx', '__aadmin_action_name=' + action_name[1]);
+            }
+            return url;
+        } else {
+            return href;
+        }
+    }
+</script>

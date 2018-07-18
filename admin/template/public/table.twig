@@ -1,0 +1,74 @@
+{% extends '@__base__/base.twig' %}
+
+{% block script %}
+
+    <!--引入公共脚本文件-->
+    {% include 'public/script.twig' %}
+
+    <script>
+        $(function () {
+            $('a').each(function () {
+                $(this).attr('href', transUrl($(this).attr('href')));
+            });
+        })
+    </script>
+{% endblock %}
+
+{% block body %}
+    <style type="text/css">
+        .table img {
+            width: 100px
+        }
+
+        form .select-field {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        form .select-field span {
+            padding: 0px 5px;
+        }
+
+        td a {
+            padding: 0px 7px 0px 0px;
+        }
+    </style>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-xs-12">
+                {% if view.field %}
+                    <form class="form-horizontal form-field" action="{{ request_url(null, search_action_name) }}"
+                          method="post">
+                        {% autoescape false %}
+                            {{ view.field }}
+                        {% endautoescape %}
+                        <button class="btn btn-success  btn-sm" type="submit" target-form="form-horizontal">搜索</button>&nbsp;
+                    </form>
+                {% endif %}
+            </div>
+
+            <div class="col-xs-12">
+                {% if  add_action_name %}
+                    &nbsp;<a class="btn btn-success btn-sm" href="{{ request_url(null, add_action_name) }}">添加</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    {% if view.view %}
+                        {% autoescape false %}
+                            {{ view.view }}
+                        {% endautoescape %}
+                    {% else %}
+                        没有数据
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+    {% include '@__base__/Public/page.twig' with {'page':page} only %}
+{% endblock %}

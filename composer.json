@@ -12,11 +12,13 @@
   ],
   "require": {
     "php": ">=5.6",
-    "magein/render-data": "~1"
+    "magein/render-data": "~1",
+    "popo1h/aadmin-core": "*@dev"
   },
   "autoload": {
     "psr-4": {
-      "Magein\\renderDataExt\\library\\": "library/"
+      "Magein\\renderDataExt\\library\\": "library/",
+      "Magein\\renderDataExt\\admin\\": "admin/"
     }
   },
   "repositories": {
