@@ -35,3 +35,11 @@
     18.7.6  
      
         1. 修复OperateRender类渲染的a标签 target 属性的值默认使用 _blank 修改为 _self ,使用 _blank 在360浏览器中会打开新的标签  
+        
+    18.7.18
+     
+        1. 新增 admin 文件夹，这个文件夹专用于掌上大学项目，封装了一个公共的 CommonAction 以便于统一管理，而不是通过复制粘贴到每个项目中
+         
+        2. 把公共的 html 静态文件也移到 admin文件夹下，放在 template中，其中public 存放公共静态资源文件，TemplateList重写了加载模板的方法，在原有的加载模板的方式放增加了加载公共模板文件的逻辑 
+        
+        3. composer.josn中 自动加载增加 admin 文件夹的映射关系
