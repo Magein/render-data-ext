@@ -117,10 +117,10 @@ class CommonAction extends BaseAction
     protected function template()
     {
         if (preg_match('/Edit/', static::class)) {
-            return 'public/form.twig';
+            return 'form.twig';
         }
 
-        return 'public/table.twig';
+        return 'table.twig';
     }
 
     /**
@@ -204,7 +204,8 @@ class CommonAction extends BaseAction
     }
 
     /**
-     * 仅限于编辑页面使用
+     * 仅限于编辑页面使用，
+     * 这里保存使用单独的一个控制器是用于更细致的权限控制
      * @param null|string $actionName 指定数据保存请求的跳转的action 不指定则使用默认的action  (XXXSaveAction)
      * @return array
      */
@@ -299,7 +300,7 @@ class CommonAction extends BaseAction
         /**
          * 如果是下载数据，则下载全部数据
          */
-        if ($this->export = self::RECORDS_EXPORT) {
+        if ($this->export == self::RECORDS_EXPORT) {
             $pageLogic = null;
         } else {
             $pageLogic = new Page();
@@ -324,14 +325,14 @@ class CommonAction extends BaseAction
 
         $this->view($records);
 
-        if ($this->export = self::RECORDS_EXPORT) {
+        if ($this->export == self::RECORDS_EXPORT) {
             return $this->downloadCsv();
         }
 
         $data['view'] = $this->view;
         $data['select'] = $this->select;
 
-        if ($pageLogic) {
+        if ($pageLogic && $pageLogic->pages) {
             $pages = $pageLogic->pages;
             $pageParam = $param->getGet();
             $pageParamPost = $param->getPost();

@@ -48,9 +48,24 @@ class TemplateList extends \AadminCore\AdminServer\Actions\TemplateList
         return $files;
     }
 
+    protected function getPublicTemplateFiles()
+    {
+
+        $filePath = dirname(__FILE__) . DS . 'public';
+
+        $publicTemplateFiles = $this->getFiles($filePath);
+
+        return $publicTemplateFiles;
+    }
+
     private function getTemplateList()
     {
+
         $templateFiles = $this->getFiles($this->templatePath);
+        /**
+         * 加载公共模板文件
+         */
+        $templateFiles = array_merge($templateFiles, $this->getPublicTemplateFiles());
 
         $templateList = [];
         foreach ($templateFiles as $templateName => $templateFileName) {

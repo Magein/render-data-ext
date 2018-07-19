@@ -3,7 +3,7 @@
 {% block script %}
 
     <!--引入公共脚本文件-->
-    {% include 'public/script.twig' %}
+    {% include 'script.twig' %}
 
     <script>
         $(function () {
@@ -36,11 +36,11 @@
     <div class="page-header">
         <div class="row">
             <div class="col-xs-12">
-                {% if view.field %}
+                {% if view.select %}
                     <form class="form-horizontal form-field" action="{{ request_url(null, search_action_name) }}"
                           method="post">
                         {% autoescape false %}
-                            {{ view.field }}
+                            {{ view.select }}
                         {% endautoescape %}
                         <button class="btn btn-success  btn-sm" type="submit" target-form="form-horizontal">搜索</button>&nbsp;
                     </form>
