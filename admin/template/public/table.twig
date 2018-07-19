@@ -36,11 +36,11 @@
     <div class="page-header">
         <div class="row">
             <div class="col-xs-12">
-                {% if view.select %}
+                {% if select %}
                     <form class="form-horizontal form-field" action="{{ request_url(null, search_action_name) }}"
                           method="post">
                         {% autoescape false %}
-                            {{ view.select }}
+                            {{ select }}
                         {% endautoescape %}
                         <button class="btn btn-success  btn-sm" type="submit" target-form="form-horizontal">搜索</button>&nbsp;
                     </form>
@@ -59,9 +59,9 @@
         <div class="col-xs-12">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover">
-                    {% if view.view %}
+                    {% if view %}
                         {% autoescape false %}
-                            {{ view.view }}
+                            {{ view }}
                         {% endautoescape %}
                     {% else %}
                         没有数据

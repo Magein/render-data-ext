@@ -2,10 +2,9 @@
 
 namespace Magein\renderDataExt\admin\action;
 
-use AadminCore\Admin\BaseAction;
 use AadminCore\Core\RequestParam;
 
-class WebUploaderAction extends BaseAction
+class WebUploaderAction extends CommonAction
 {
     /**
      * @return string
@@ -57,52 +56,14 @@ eof;
     public function doAction(RequestParam $param)
     {
 
-        /**
-         *
-         * 请注意：批量上传也是一个一个请求
-         *
-         * $param->getFileDataByName('file');
-         * 获取的数组形式：
-         *
-         *  array (size=5)
-         *       'name' => string 'QQ截图20161116191522.png' (length=26)
-         *       'type' => string 'image/png' (length=9)
-         *       'size' => int 300656
-         *       'tmp_name' => string 'E:/wamp64/tmp\aadmin_upload_file_7c272b7c6352a51abe44de57c836da485053' (length=69)
-         *       'error' => int 0
-         *
-         *
-         *  $param->getPost();
-         *  获取的数据形式如下：
-         *  array (size=6)
-         *   'uid' => string '123' (length=3)
-         *   'id' => string 'WU_FILE_0' (length=9)
-         *   'name' => string 'QQ截图20161116191522.png' (length=26)
-         *   'type' => string 'image/png' (length=9)
-         *   'lastModifiedDate' => string 'Wed Nov 16 2016 19:15:24 GMT+0800 (中国标准时间)' (length=54)
-         *   'size' => string '300656' (length=6)
-         *
-         *  $param->getFile();
-         *  获取的数据形式如下:
-         *  array (size=1)
-         *   'file' =>
-         *   array (size=5)
-         *   'name' => string 'QQ截图20161116191522.png' (length=26)
-         *   'type' => string 'image/png' (length=9)
-         *   'size' => int 300656
-         *   'tmp_name' => string 'E:/wamp64/tmp\aadmin_upload_file_7c272b7c6352a51abe44de57c836da485053' (length=69)
-         *   'error' => int 0
-         *
-         */
-
         $file = $param->getFileDataByName('file');
 
-        $result = $this->uploadPhoto($file);
+        $result = $this->upload($file);
 
-        if ($result['code']) {
-            return $this->buildAjaxResponse(self::CODE_SUCCESS, '上传成功', $result['data']);
+        if ($result) {
+            return $this->buildAjaxResponse(self::CODE_SUCCESS, '上传成功', $this->uploadRes);
         }
 
-        return $this->buildAjaxResponse(self::CODE_ERROR, $result['msg']);
+        return $this->buildAjaxResponse(self::CODE_ERROR, $this->uploadRes);
     }
 }

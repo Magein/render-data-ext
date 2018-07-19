@@ -77,6 +77,13 @@ class CommonAction extends BaseAction
     protected $assign = [];
 
     /**
+     * 上传成功后 这里显示的是 上传的路径  上传失败后这里显示的错误信息
+     * 数组表示批量上传的结果
+     * @var string|array
+     */
+    protected $uploadRes = '';
+
+    /**
      * @return string
      */
     protected function getRenderStyle()
@@ -265,6 +272,81 @@ class CommonAction extends BaseAction
             self::RECORDS_SHOW => '展示',
             self::RECORDS_EXPORT => '导出'
         ];
+    }
+
+    /**
+     *
+     * 这里暂时不支持批量上传
+     *
+     * $param->getFileDataByName('file');
+     * 获取的数组形式：
+     *
+     *  array (size=5)
+     *       'name' => string 'QQ截图20161116191522.png' (length=26)
+     *       'type' => string 'image/png' (length=9)
+     *       'size' => int 300656
+     *       'tmp_name' => string 'E:/wamp64/tmp\aadmin_upload_file_7c272b7c6352a51abe44de57c836da485053' (length=69)
+     *       'error' => int 0
+     *
+     *
+     *  $param->getPost();
+     *  获取的数据形式如下：
+     *  array (size=6)
+     *   'uid' => string '123' (length=3)
+     *   'id' => string 'WU_FILE_0' (length=9)
+     *   'name' => string 'QQ截图20161116191522.png' (length=26)
+     *   'type' => string 'image/png' (length=9)
+     *   'lastModifiedDate' => string 'Wed Nov 16 2016 19:15:24 GMT+0800 (中国标准时间)' (length=54)
+     *   'size' => string '300656' (length=6)
+     *
+     *  $param->getFile();
+     *  获取的数据形式如下:
+     *  array (size=1)
+     *   'file' =>
+     *   array (size=5)
+     *   'name' => string 'QQ截图20161116191522.png' (length=26)
+     *   'type' => string 'image/png' (length=9)
+     *   'size' => int 300656
+     *   'tmp_name' => string 'E:/wamp64/tmp\aadmin_upload_file_7c272b7c6352a51abe44de57c836da485053' (length=69)
+     *   'error' => int 0
+     *
+     * @param array $file 使用$param->getFileDataByName('name')得到的结果
+     * @return bool
+     */
+    public function upload($file)
+    {
+        if (empty($file)) {
+            $this->uploadRes = '文件为空';
+            return false;
+        }
+
+        $allowExt = ['jpg', 'png', 'gif', 'jpeg'];
+        $fileExt = pathinfo($file['name'], PATHINFO_EXTENSION);
+        if (!in_array($fileExt, $allowExt)) {
+            $this->uploadRes = '上传文件类型不允许';
+            return false;
+        }
+        $fileBuilder = 'app\common\object\upload\FileBuilder';
+        if (class_exists($fileBuilder)) {
+            $file = call_user_func_array($fileBuilder . '::buildFileByPhpFile', [$file]);
+            if ($file) {
+                $uploadLogic = 'app\common\logic\upload\UploadLogic';
+                if (class_exists($uploadLogic)) {
+                    $uploadLogic = new $uploadLogic();
+                    $result = call_user_func_array([$uploadLogic, 'upload'], [$file]);
+                    if (false === call_user_func([$uploadLogic, 'checkError'])) {
+                        $this->uploadRes = call_user_func([$result, 'getUrl']);
+                        return true;
+                    } else {
+                        $this->uploadRes = 'reason:' . call_user_func([$uploadLogic, 'getErrorInfo']);
+                        return false;
+                    }
+                }
+            }
+        }
+
+        $this->uploadRes = '缺少上传文件处理类';
+        return false;
     }
 
     /**

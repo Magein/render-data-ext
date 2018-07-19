@@ -2,12 +2,10 @@
 
 namespace Magein\renderDataExt\admin\action;
 
-use AadminCore\Admin\BaseAction;
 use AadminCore\Core\RequestParam;
 use AadminCore\Core\Response\Json;
-use app\core\object\Page;
 
-class UeditorAction extends BaseAction
+class UeditorAction extends CommonAction
 {
     private $config = [
         /* 上传图片配置项 */
@@ -267,24 +265,6 @@ class UeditorAction extends BaseAction
 
     /**
      * @param RequestParam $param
-     * @param Page|null $pageLogic
-     * @return array
-     */
-    public function getData(RequestParam $param, Page $pageLogic = null)
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getAssign()
-    {
-        return [];
-    }
-
-    /**
-     * @param RequestParam $param
      * @return Json
      */
     public function doAction(RequestParam $param)
@@ -324,14 +304,12 @@ class UeditorAction extends BaseAction
     private function uploadImage($file)
     {
 
-        $url = 'http://pic.wxhand.com/dev/wei_image/2ba955ac666f88202fa08a2413356324.gif';
+        $result = $this->upload($file);
 
-        // todo
-
-        if ($url) {
+        if ($result) {
             $info = [
                 'state' => 'SUCCESS',
-                'url' => $url
+                'url' => $this->uploadRes
             ];
         } else {
             $info = [
