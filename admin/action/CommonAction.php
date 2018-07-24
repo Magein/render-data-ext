@@ -2,14 +2,11 @@
 
 namespace Magein\renderDataExt\admin\action;
 
-use AadminCore\Admin\BaseAction;
 use AadminCore\Core\RequestParam;
+use AadminCore\Admin\BaseAction;
 use AadminCore\Core\Response\Download;
-use Magein\renderDataExt\library\RenderFactory;
-
 use app\core\object\Page;
-use think\Config;
-use think\Model;
+use Magein\renderDataExt\library\RenderFactory;
 
 class CommonAction extends BaseAction
 {
@@ -100,8 +97,8 @@ class CommonAction extends BaseAction
     }
 
     /**
-     * @param RequestParam $param
-     * @param Page|null $pageLogic
+     * @param  RequestParam|null $param
+     * @param  Page|null $pageLogic
      * @return array
      */
     protected function getData(RequestParam $param, Page $pageLogic = null)
@@ -144,8 +141,13 @@ class CommonAction extends BaseAction
      */
     protected function getAssign()
     {
-        // 页面js脚本文件版本,外部插件不使用，主要针对个人写的公共脚本文件,开发阶段使用一个随机值防止缓存
-        $staticVersion = Config::get('APP_ENV') == 1 ? rand(100000, 999999) : 'v1.0.1';
+        $config = 'think\Config';
+        if (class_exists($config)) {
+            // 页面js脚本文件版本,外部插件不使用，主要针对个人写的公共脚本文件,开发阶段使用一个随机值防止缓存
+            $staticVersion = call_user_func($config . '::get', 'APP_ENV') == 1 ? rand(100000, 999999) : 'v1.0.1';
+        } else {
+            $staticVersion = 'v' . rand(100000, 999999);
+        }
 
         return [
             'public_title' => static::getIntro(),
@@ -238,11 +240,13 @@ class CommonAction extends BaseAction
         $renderFactory = new RenderFactory($data, $style);
 
         $fieldTitleClass = 'app\admin\logic\FieldTitleLogic';
+
+
         if (class_exists($fieldTitleClass)) {
             if (null === $fieldGroup) {
-                $result = forward_static_call([$fieldTitleClass, 'getAllTitle']);
+                $result = call_user_func($fieldTitleClass . '::getAllTitle');
             } else {
-                $result = forward_static_call([$fieldTitleClass, 'getFieldTitle'], $fieldGroup);
+                $result = call_user_func($fieldTitleClass . '::getFieldTitle', $fieldGroup);
             }
             $renderFactory->setFieldTitle($result);
         }
@@ -369,6 +373,20 @@ class CommonAction extends BaseAction
     }
 
     /**
+     * @param string $cateName
+     * @param string $url
+     * @return string
+     */
+    public function qrcodeUrl($cateName, $url)
+    {
+        $data['__aadmin_cate_name'] = $cateName;
+        $data['__aadmin_action_name'] = WebQrcodeAction::getName();
+        $data['url'] = $url;
+
+        return '?' . http_build_query($data);
+    }
+
+    /**
      * @param RequestParam $param
      * @return Download|\AadminCore\Core\Response\View
      */
@@ -380,12 +398,12 @@ class CommonAction extends BaseAction
         $data = $this->getAssign();
 
         /**
-         * 如果是下载数据，则下载全部数据
+         * 如果分页类存在，则进行分页数据处理
          */
-        if ($this->export == self::RECORDS_EXPORT) {
-            $pageLogic = null;
-        } else {
-            $pageLogic = new Page();
+        $pageLogic = null;
+        $pageClass = 'app\core\object\Page';
+        if (class_exists($pageClass)) {
+            $pageLogic = new $pageClass();
             $pageLogic->page_size = 10;
             $pageLogic->now_page = $param->getDataByName('page_id', 1);
         }
@@ -398,10 +416,7 @@ class CommonAction extends BaseAction
         /**
          * 渲染数据，需要一个数据，tp5 中查询的结果是一个对象，如果是一个对象则处理成数据
          */
-        if (is_object($records)) {
-            /**
-             * @var Model $records
-             */
+        if (is_object($records) && method_exists($records, 'toArray')) {
             $records = $records->toArray();
         }
 
@@ -414,7 +429,7 @@ class CommonAction extends BaseAction
         $data['view'] = $this->view;
         $data['select'] = $this->select;
 
-        if ($pageLogic && $pageLogic->pages) {
+        if ($pageLogic && property_exists($pageLogic, 'pages')) {
             $pages = $pageLogic->pages;
             $pageParam = $param->getGet();
             $pageParamPost = $param->getPost();

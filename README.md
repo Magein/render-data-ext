@@ -43,3 +43,11 @@
         2. 把公共的 html 静态文件也移到 admin文件夹下，放在 template中，其中public 存放公共静态资源文件，TemplateList重写了加载模板的方法，在原有的加载模板的方式放增加了加载公共模板文件的逻辑 
         
         3. composer.josn中 自动加载增加 admin 文件夹的映射关系
+        
+    18.7.24 
+        
+        1. 新增 WebQrcodeAction 类，将链接转化为二维码
+        
+        2. CommonAction类新增 qrcodeUrl() 方法，传递一个链接生成访问 WebQrcodeAction 的链接
+        
+        3. 优化引入不存在类，使用 class_exist() 先进行验证
