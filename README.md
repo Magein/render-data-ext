@@ -51,3 +51,9 @@
         2. CommonAction类新增 qrcodeUrl() 方法，传递一个链接生成访问 WebQrcodeAction 的链接
         
         3. 优化引入不存在类，使用 class_exist() 先进行验证
+        
+    18.8.21
+    
+        1. CommonAction类新增 loadExportButton() 方法，用来是否加载导出按钮
+        
+        2. table.twig 增加 导出按钮控制逻辑
