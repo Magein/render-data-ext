@@ -52,9 +52,11 @@
                 {% endif %}
             </div>
 
-            <div class="col-xs-2">
-                <button class="btn btn-success btn-sm">导出</button>
-            </div>
+            {% if  export_action_name %}
+                <div class="col-xs-2">
+                    <button class="btn btn-success btn-sm btn-export">导出</button>
+                </div>
+            {% endif %}
         </div>
     </div>
 
