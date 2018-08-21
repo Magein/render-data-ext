@@ -197,6 +197,20 @@ class CommonAction extends BaseAction
     }
 
     /**
+     * 加载 导出 按钮，仅限于用于数据列表展示页面中
+     * @param null $actionName
+     * @return array
+     */
+    protected function loadExportButton($actionName = null)
+    {
+        if ($actionName === null) {
+            $actionName = preg_replace('/List/', 'Edit', static::class);
+        }
+        $this->assign['export_action_name'] = $actionName;
+        return $this->assign;
+    }
+
+    /**
      * 加载 搜索 按钮 仅限于用于数据列表展示页面中 搜索数据使用
      * @param null|string $actionName 指定搜索跳转的action 不指定则默认跳转到当前页
      * @return array

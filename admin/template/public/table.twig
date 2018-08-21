@@ -35,22 +35,25 @@
     </style>
     <div class="page-header">
         <div class="row">
-            <div class="col-xs-12">
-                {% if select %}
+            {% if  add_action_name %}
+                <div class="col-xs-12" style="margin-bottom: 20px;">
+                    <a class="btn btn-success btn-sm" href="{{ request_url(null, add_action_name) }}">添加</a>
+                </div>
+            {% endif %}
+            <div class="col-xs-10">
+                {% if view.field %}
                     <form class="form-horizontal form-field" action="{{ request_url(null, search_action_name) }}"
                           method="post">
                         {% autoescape false %}
-                            {{ select }}
+                            {{ view.field }}
                         {% endautoescape %}
                         <button class="btn btn-success  btn-sm" type="submit" target-form="form-horizontal">搜索</button>&nbsp;
                     </form>
                 {% endif %}
             </div>
 
-            <div class="col-xs-12">
-                {% if  add_action_name %}
-                    &nbsp;<a class="btn btn-success btn-sm" href="{{ request_url(null, add_action_name) }}">添加</a>
-                {% endif %}
+            <div class="col-xs-2">
+                <button class="btn btn-success btn-sm">导出</button>
             </div>
         </div>
     </div>
