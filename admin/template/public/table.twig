@@ -41,11 +41,11 @@
                 </div>
             {% endif %}
             <div class="col-xs-10">
-                {% if view.field %}
+                {% if select %}
                     <form class="form-horizontal form-field" action="{{ request_url(null, search_action_name) }}"
                           method="post">
                         {% autoescape false %}
-                            {{ view.field }}
+                            {{ select }}
                         {% endautoescape %}
                         <button class="btn btn-success  btn-sm" type="submit" target-form="form-horizontal">搜索</button>&nbsp;
                     </form>
