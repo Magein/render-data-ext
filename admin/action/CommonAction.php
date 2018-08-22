@@ -445,17 +445,19 @@ class CommonAction extends BaseAction
 
         if ($pageLogic && property_exists($pageLogic, 'pages')) {
             $pages = $pageLogic->pages;
-            $pageParam = $param->getGet();
-            $pageParamPost = $param->getPost();
-            $pageParam = array_merge($pageParam, $pageParamPost);
-            foreach ($pageParam as $key => $item) {
-                if ($item === '') {
-                    unset($pageParam[$key]);
+            if ($pages) {
+                $pageParam = $param->getGet();
+                $pageParamPost = $param->getPost();
+                $pageParam = array_merge($pageParam, $pageParamPost);
+                foreach ($pageParam as $key => $item) {
+                    if ($item === '') {
+                        unset($pageParam[$key]);
+                    }
                 }
+                unset($pageParam['page_id']);
+                unset($pageParam['__user_id']);
+                $data['page'] = $this->buildViewPage($pages['now_page'], $pages['total_count'], $pages['page_size'], $pageParam);
             }
-            unset($pageParam['page_id']);
-            unset($pageParam['__user_id']);
-            $data['page'] = $this->buildViewPage($pages['now_page'], $pages['total_count'], $pages['page_size'], $pageParam);
         }
 
         return $this->buildViewResponse($this->template(), $data);
