@@ -249,12 +249,19 @@ class CommonAction extends BaseAction
      * @param null $fieldGroup
      * @return RenderFactory
      */
-    protected function renderFactory($data, $style = 'table', $fieldGroup = null)
+    protected function renderFactory($data, $style = '', $fieldGroup = null)
     {
+        if (empty($style)) {
+            if ($this->export == self::RECORDS_EXPORT) {
+                $style = self::RENDER_STYLE_EXPORT;
+            } else {
+                $style = self::RENDER_STYLE_TABLE;
+            }
+        }
+
         $renderFactory = new RenderFactory($data, $style);
 
         $fieldTitleClass = 'app\admin\logic\FieldTitleLogic';
-
 
         if (class_exists($fieldTitleClass)) {
             if (null === $fieldGroup) {
