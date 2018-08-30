@@ -57,3 +57,7 @@
         1. CommonAction类新增 loadExportButton() 方法，用来是否加载导出按钮
         
         2. table.twig 增加 导出按钮控制逻辑
+        
+    18.8.30
+    
+        1. CommonAction类第545行增加isset判断
