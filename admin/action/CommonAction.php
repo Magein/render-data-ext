@@ -451,7 +451,7 @@ class CommonAction extends BaseAction
         $data['select'] = $this->select;
 
         if ($pageLogic && property_exists($pageLogic, 'pages')) {
-            $pages = $pageLogic->pages;
+            $pages = isset($pageLogic->pages) ? $pageLogic->pages : [];
             if ($pages) {
                 $pageParam = $param->getGet();
                 $pageParamPost = $param->getPost();
