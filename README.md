@@ -65,3 +65,7 @@
     18.9.4
      
         1. script.twig 引入的脚本中增加版本参数，开发中可以设置一个随机数来防止缓存
+        
+    18.9.6
+     
+        1. script.twig 修复 transUrl() 方法中的参数为undefind的时候，调用 match方法报错

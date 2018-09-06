@@ -48,6 +48,10 @@
      */
     function transUrl(href) {
 
+        if (href === undefined) {
+            return '';
+        }
+
         if (!href.match(/\?action_name=/)) {
             return href;
         }
